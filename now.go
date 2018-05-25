@@ -46,6 +46,20 @@ func (now *Now) BeginningOfMonth() time.Time {
 	return time.Date(y, m, 1, 0, 0, 0, 0, now.Location())
 }
 
+// BeginningOfMonth beginning of month
+func (now *Now) BeginningOfPreviousMonth() time.Time {
+	y, m, _ := now.Date()
+	prevY := y
+	var prevM time.Month
+	if m == 1 {
+		prevY = y - 1
+		prevM = 12
+	} else {
+		prevM = m - 1
+	}
+	return time.Date(prevY, prevM, 1, 0, 0, 0, 0, now.Location())
+}
+
 // BeginningOfQuarter beginning of quarter
 func (now *Now) BeginningOfQuarter() time.Time {
 	month := now.BeginningOfMonth()

@@ -52,6 +52,11 @@ func BeginningOfMonth() time.Time {
 	return New(time.Now()).BeginningOfMonth()
 }
 
+// BeginningOfPreviousMonth beginning of previous month
+func BeginningOfPreviousMonth() time.Time {
+	return New(time.Now()).BeginningOfPreviousMonth()
+}
+
 // BeginningOfQuarter beginning of quarter
 func BeginningOfQuarter() time.Time {
 	return New(time.Now()).BeginningOfQuarter()
