@@ -75,38 +75,38 @@ func (now *Now) BeginningOfYear() time.Time {
 
 // EndOfMinute end of minute
 func (now *Now) EndOfMinute() time.Time {
-	return now.BeginningOfMinute().Add(time.Minute - time.Nanosecond)
+	return now.BeginningOfMinute().Add(time.Minute - time.Second)
 }
 
 // EndOfHour end of hour
 func (now *Now) EndOfHour() time.Time {
-	return now.BeginningOfHour().Add(time.Hour - time.Nanosecond)
+	return now.BeginningOfHour().Add(time.Hour - time.Second)
 }
 
 // EndOfDay end of day
 func (now *Now) EndOfDay() time.Time {
 	y, m, d := now.Date()
-	return time.Date(y, m, d, 23, 59, 59, int(time.Second-time.Nanosecond), now.Location())
+	return time.Date(y, m, d, 23, 59, 59, 0, now.Location())
 }
 
 // EndOfWeek end of week
 func (now *Now) EndOfWeek() time.Time {
-	return now.BeginningOfWeek().AddDate(0, 0, 7).Add(-time.Nanosecond)
+	return now.BeginningOfWeek().AddDate(0, 0, 7).Add(-time.Second)
 }
 
 // EndOfMonth end of month
 func (now *Now) EndOfMonth() time.Time {
-	return now.BeginningOfMonth().AddDate(0, 1, 0).Add(-time.Nanosecond)
+	return now.BeginningOfMonth().AddDate(0, 1, 0).Add(-time.Second)
 }
 
 // EndOfQuarter end of quarter
 func (now *Now) EndOfQuarter() time.Time {
-	return now.BeginningOfQuarter().AddDate(0, 3, 0).Add(-time.Nanosecond)
+	return now.BeginningOfQuarter().AddDate(0, 3, 0).Add(-time.Second)
 }
 
 // EndOfYear end of year
 func (now *Now) EndOfYear() time.Time {
-	return now.BeginningOfYear().AddDate(1, 0, 0).Add(-time.Nanosecond)
+	return now.BeginningOfYear().AddDate(1, 0, 0).Add(-time.Second)
 }
 
 // Monday monday
@@ -170,7 +170,7 @@ func (now *Now) Parse(strs ...string) (t time.Time, err error) {
 			parseTime = []int{t.Nanosecond(), t.Second(), t.Minute(), t.Hour(), t.Day(), int(t.Month()), t.Year()}
 
 			for i, v := range parseTime {
-				// Don't reset hour, minute, second if current time str including time
+				// Don't reset hour, minute, second if current time str including mytime
 				if hasTimeInStr && i <= 3 {
 					continue
 				}
@@ -184,7 +184,7 @@ func (now *Now) Parse(strs ...string) (t time.Time, err error) {
 					setCurrentTime = true
 				}
 
-				// if current time only includes time, should change day, month to current time
+				// if current time only includes mytime, should change day, month to current mytime
 				if onlyTimeInStr {
 					if i == 4 || i == 5 {
 						parseTime[i] = currentTime[i]
@@ -209,7 +209,7 @@ func (now *Now) MustParse(strs ...string) (t time.Time) {
 	return t
 }
 
-// Between check time between the begin, end time or not
+// Between check time between the begin, end mytime or not
 func (now *Now) Between(begin, end string) bool {
 	beginTime := now.MustParse(begin)
 	endTime := now.MustParse(end)
